@@ -9,6 +9,9 @@
     "website": "https://github.com/OCA/account-invoicing",
     "license": "AGPL-3",
     "depends": ["account"],
-    "data": ["views/account_invoice_view.xml"],
+    "data": [
+        "views/account_invoice_view.xml",
+        "reports/account_invoice_report_view.xml",
+    ],
     "installable": True,
 }
