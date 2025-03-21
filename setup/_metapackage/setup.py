@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo-addon-account_invoice_block_payment>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_blocking>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_change_currency>=16.0dev,<16.1dev',
+        'odoo-addon-account_invoice_check_picking_date>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_check_total>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_clearing>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_crm_tag>=16.0dev,<16.1dev',
