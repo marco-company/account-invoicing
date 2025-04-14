@@ -26,6 +26,7 @@ class AccountMove(models.Model):
                 # Preserve the subtotal when converting from tax incl to excl
                 price_unit = line.product_id._get_tax_included_unit_price_from_price(
                     line.price_unit,
+                    line.move_id.currency_id,
                     line.tax_ids,
                     fiscal_position=line.move_id.fiscal_position_id,
                 )
