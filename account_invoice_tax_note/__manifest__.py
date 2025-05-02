@@ -7,7 +7,7 @@
     "development_status": "Production/Stable",
     "summary": "Print tax notes on customer invoices",
     "website": "https://github.com/OCA/account-invoicing",
-    "category": "Localization / Accounting",
+    "category": "Accounting",
     "license": "AGPL-3",
     "depends": ["account"],
     "data": ["reports/report_invoice_document.xml", "views/account_tax_views.xml"],
