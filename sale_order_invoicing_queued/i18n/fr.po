@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-12 08:21+0000\n"
+"PO-Revision-Date: 2025-05-12 10:23+0000\n"
 "Last-Translator: \"Benjamin Willig (ACSONE)\" <benjamin.willig@acsone.eu>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -24,7 +24,7 @@ msgstr "Annuler"
 #. module: sale_order_invoicing_queued
 #: model_terms:ir.ui.view,arch_db:sale_order_invoicing_queued.view_sale_advance_payment_inv
 msgid "Enqueue Invoicing"
-msgstr "Créer en tâche de fond"
+msgstr "Facturer en tâche de fond"
 
 #. module: sale_order_invoicing_queued
 #: model:ir.model.fields,field_description:sale_order_invoicing_queued.field_sale_order__invoicing_job_ids
