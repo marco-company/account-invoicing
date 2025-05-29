@@ -30,8 +30,8 @@ class AccountMove(models.Model):
                 attachments[0], self
             )
 
-    def _get_create_invoice_from_attachment_decoders(self):
-        res = super()._get_create_invoice_from_attachment_decoders()
+    def _get_create_document_from_attachment_decoders(self):
+        res = super()._get_create_document_from_attachment_decoders()
         if self.env.company.ocr_google_enabled == "send_automatically":
             res.append(
                 (

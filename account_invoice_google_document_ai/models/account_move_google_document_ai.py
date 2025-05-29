@@ -103,11 +103,11 @@ class AccountMoveGoogleDocumentAi(models.AbstractModel):
             )
             != 0
         ):
-            return _("%s is not coincident (%s - %s)") % (
-                invoice._fields[field].string,
-                format_amount(self.env, value, invoice.currency_id),
-                format_amount(self.env, invoice[field], invoice.currency_id),
-            )
+            return _("%(field_name)s is not coincident (%(value1)s - %(value2)s)") % {
+                "field_name": invoice._fields[field].string,
+                "value1": format_amount(self.env, value, invoice.currency_id),
+                "value2": format_amount(self.env, invoice[field], invoice.currency_id),
+            }
 
     def _ocr_field_control(self):
         return {
@@ -246,7 +246,7 @@ class AccountMoveGoogleDocumentAi(models.AbstractModel):
             .with_context(**context)
             .create({})
         )
-        invoice.flush()
+        invoice._flush()
         return invoice
 
     def _create_invoice_from_attachment(self, attachment):

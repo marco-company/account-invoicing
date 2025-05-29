@@ -2,13 +2,13 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import base64
+from unittest.mock import patch
 
 from google.auth import credentials as ga_credentials
 from google.cloud import documentai_v1
 from google.cloud.documentai_v1.types import document_processor_service
 from google.oauth2 import service_account
 from google.protobuf import json_format
-from mock import patch
 
 from odoo import tools
 from odoo.tests import tagged
@@ -42,9 +42,8 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
                     "filename.pdf",
                     bytes(
                         tools.file_open(
-                            "in_invoice_yourcompany_demo_1.pdf",
+                            "account/static/demo/in_invoice_yourcompany_demo_1.pdf",
                             mode="rb",
-                            subdir="addons/l10n_generic_coa/static/src/demo",
                         ).read()
                     ),
                 )
@@ -60,8 +59,7 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
             response = document_processor_service.ProcessResponse.pb(resp)
             json_format.Parse(
                 tools.file_open(
-                    "result.json",
-                    subdir="addons/account_invoice_google_document_ai/tests",
+                    "account_invoice_google_document_ai/tests/result.json",
                 )
                 .read()
                 .encode("UTF-8"),
@@ -74,7 +72,7 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
 
     def test_ocr_process_automatically(self):
         self.company_data["company"].ocr_google_enabled = "send_automatically"
-        move = self.init_invoice("in_invoice", self.env["res.partner"], "2023-01-01")
+        move = self.init_invoice("in_invoice", self.env["res.partner"], "2025-01-01")
         self.assertFalse(move.line_ids)
 
         with patch.object(
@@ -86,10 +84,7 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
             resp = document_processor_service.ProcessResponse()
             response = document_processor_service.ProcessResponse.pb(resp)
             json_format.Parse(
-                tools.file_open(
-                    "result.json",
-                    subdir="addons/account_invoice_google_document_ai/tests",
-                )
+                tools.file_open("account_invoice_google_document_ai/tests/result.json")
                 .read()
                 .encode("UTF-8"),
                 response,
@@ -102,9 +97,8 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
                         "filename.pdf",
                         bytes(
                             tools.file_open(
-                                "in_invoice_yourcompany_demo_1.pdf",
+                                "account/static/demo/in_invoice_yourcompany_demo_1.pdf",
                                 mode="rb",
-                                subdir="addons/l10n_generic_coa/static/src/demo",
                             ).read()
                         ),
                     )
@@ -120,9 +114,8 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
                 "datas": base64.b64encode(
                     bytes(
                         tools.file_open(
-                            "in_invoice_yourcompany_demo_1.pdf",
+                            "account/static/demo/in_invoice_yourcompany_demo_1.pdf",
                             mode="rb",
-                            subdir="addons/l10n_generic_coa/static/src/demo",
                         ).read()
                     )
                 ),
@@ -138,10 +131,7 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
             resp = document_processor_service.ProcessResponse()
             response = document_processor_service.ProcessResponse.pb(resp)
             json_format.Parse(
-                tools.file_open(
-                    "result.json",
-                    subdir="addons/account_invoice_google_document_ai/tests",
-                )
+                tools.file_open("account_invoice_google_document_ai/tests/result.json")
                 .read()
                 .encode("UTF-8"),
                 response,
@@ -150,5 +140,5 @@ class TestGoogleDocumentAi(AccountTestInvoicingCommon):
             process.return_value = resp
             self.env["account.journal"].with_context(
                 default_move_type="in_invoice"
-            ).create_invoice_from_attachment(attachment.ids)
+            )._create_document_from_attachment(attachment.ids)
         # self.assertTrue(move.invoice_line_ids)

@@ -6,7 +6,7 @@
     "name": "Account Invoice Ocr Google",
     "summary": """
         Allows to import data from document using Google Document AI""",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "CreuBlanca,ForgeFlow,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-invoicing",
