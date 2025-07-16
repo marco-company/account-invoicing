@@ -117,13 +117,13 @@ class AccountBilling(models.Model):
                 line.payment_state == "paid" for line in rec.billing_line_ids
             )
 
-    def _get_moves_domain(self, date=False, types=False):
+    def _get_moves_domain(self, date, types=False):
         return [
             ("partner_id", "=", self.partner_id.id),
             ("state", "=", "posted"),
             ("payment_state", "!=", "paid"),
             ("currency_id", "=", self.currency_id.id),
-            ("date", "<=", self.threshold_date),
+            (date, "<=", self.threshold_date),
             ("move_type", "in", types),
         ]
 
