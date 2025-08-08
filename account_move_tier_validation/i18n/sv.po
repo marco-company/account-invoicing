@@ -68,6 +68,11 @@ msgid "Invoices where validation has not started"
 msgstr "Fakturor vars attestering inte har påbörjats"
 
 #. module: account_move_tier_validation
+#: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__is_reevaluation_required
+msgid "Is Reevaluation Required"
+msgstr ""
+
+#. module: account_move_tier_validation
 #: model:ir.model,name:account_move_tier_validation.model_account_move
 msgid "Journal Entry"
 msgstr "Verifikat"
@@ -105,11 +110,6 @@ msgid "Refund"
 msgstr "Återbetalning"
 
 #. module: account_move_tier_validation
-#: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__rejected
-msgid "Rejected"
-msgstr "Nekad"
-
-#. module: account_move_tier_validation
 #: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__rejected_message
 msgid "Rejected Message"
 msgstr "Avvisat meddelande"
@@ -130,7 +130,6 @@ msgid "To Validate Message"
 msgstr "För att validera meddelandet"
 
 #. module: account_move_tier_validation
-#: model:ir.model.fields,field_description:account_move_tier_validation.field_account_move__validated
 #: model_terms:ir.ui.view,arch_db:account_move_tier_validation.view_account_invoice_filter
 msgid "Validated"
 msgstr "Attesterad"
@@ -166,6 +165,9 @@ msgstr "Attesteringar"
 #, python-format
 msgid "You are not allowed to write those fields"
 msgstr ""
+
+#~ msgid "Rejected"
+#~ msgstr "Nekad"
 
 #~ msgid "Reject"
 #~ msgstr "Neka"
