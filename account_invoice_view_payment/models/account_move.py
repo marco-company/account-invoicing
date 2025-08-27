@@ -22,16 +22,16 @@ class AccountMove(models.Model):
             action = self.env["ir.actions.act_window"]._for_xml_id(
                 "account.action_account_payments"
             )
-        reconciles = self._get_reconciled_info_JSON_values()
-        payment = []
-        for rec in reconciles:
-            payment.append(rec["account_payment_id"])
+
+        payments = []
+        for move in self:
+            payments = move._get_reconciled_payments().ids
 
         # choose the view_mode accordingly
-        if len(reconciles) != 1:
-            action["domain"] = "[('id', 'in', " + str(payment) + ")]"
+        if len(payments) > 1:
+            action["domain"] = "[('id', 'in', " + str(payments) + ")]"
         else:
             res = self.env.ref("account.view_account_payment_form", False)
             action["views"] = [(res and res.id or False, "form")]
-            action["res_id"] = payment and payment[0] or False
+            action["res_id"] = payments and payments[0] or False
         return action
