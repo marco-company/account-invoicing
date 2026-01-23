@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===============
 Billing Process
 ===============
@@ -17,7 +13,7 @@ Billing Process
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--invoicing-lightgray.png?logo=github
@@ -88,6 +84,9 @@ Contributors
 * Saran Lim. <saranl@ecosoft.co.th>
 * Rattapong Chokmasermkul <rattapongc@ecosoft.co.th>
 * Komsan Somwong <komsan.s@ecosoft.co.th>
+* `Quartile <https://www.quartile.co>`__:
+
+  * Aung Ko Ko Lin
 
 Maintainers
 ~~~~~~~~~~~
