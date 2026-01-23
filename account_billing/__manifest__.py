@@ -20,6 +20,5 @@
         "report/report.xml",
     ],
     "installable": True,
-    "development_status": "Alpha",
     "maintainers": ["Saran440"],
 }
