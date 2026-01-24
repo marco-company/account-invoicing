@@ -59,6 +59,7 @@ setuptools.setup(
         'odoo-addon-account_invoice_triple_discount>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_uom_column>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_validation_queued>=16.0dev,<16.1dev',
+        'odoo-addon-account_invoice_view_payment>=16.0dev,<16.1dev',
         'odoo-addon-account_invoice_warn_message>=16.0dev,<16.1dev',
         'odoo-addon-account_mail_autosubscribe>=16.0dev,<16.1dev',
         'odoo-addon-account_menu_invoice_refund>=16.0dev,<16.1dev',
