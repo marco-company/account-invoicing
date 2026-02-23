@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ======================
 Account Fixed Discount
 ======================
@@ -13,7 +17,7 @@ Account Fixed Discount
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--invoicing-lightgray.png?logo=github
@@ -32,6 +36,8 @@ This module extends the functionality of Invoicing to allow you to apply fixed
 amount discounts at invoice line level.
 
 The module also extends the invoice report to show fixed discount.
+
+If the module `account_invoice_triple_discount` is installed and a fixed discount is set, it will take priority over anything set in the triple discount fields.
 
 **Table of contents**
 
