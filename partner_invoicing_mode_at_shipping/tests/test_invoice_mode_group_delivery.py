@@ -3,12 +3,11 @@
 
 from odoo.exceptions import ValidationError
 
+from odoo.addons.partner_invoicing_mode.tests.common import CommonPartnerInvoicingMode
 from odoo.addons.queue_job.tests.common import trap_jobs
 
-from .common import InvoiceModeAtShippingCommon
 
-
-class TestInvoiceModeAtShippingGrouped(InvoiceModeAtShippingCommon):
+class TestInvoiceModeAtShippingGrouped(CommonPartnerInvoicingMode):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -18,7 +17,6 @@ class TestInvoiceModeAtShippingGrouped(InvoiceModeAtShippingCommon):
         """Check that an invoice is created when goods are shipped."""
         self.partner.invoicing_mode = "standard"
         self.partner.one_invoice_per_shipping = True
-        self._create_order()
         self.so1.action_confirm()
         picking = self.so1.picking_ids
 

@@ -3,10 +3,10 @@
 
 from odoo.tools import mute_logger
 
-from .common import InvoiceModeAtShippingCommon
+from odoo.addons.partner_invoicing_mode.tests.common import CommonPartnerInvoicingMode
 
 
-class TestInvoiceModeAtShipping(InvoiceModeAtShippingCommon):
+class TestInvoiceModeAtShipping(CommonPartnerInvoicingMode):
     def test_invoice_created_at_shipping(self):
         """Check that an invoice is created when goods are shipped."""
         self.partner.invoicing_mode = "at_shipping"
