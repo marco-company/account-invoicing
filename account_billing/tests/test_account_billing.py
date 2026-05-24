@@ -5,7 +5,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
@@ -47,6 +47,7 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             invoice_amount=200,
             currency_id=cls.currency_eur_id,
             partner_id=cls.partner_a.id,
+            date_invoice=fields.Date.context_today(cls.env.user),
             payment_term_id=cls.payment_term.id,
             auto_validate=True,
         )
@@ -56,6 +57,7 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             invoice_amount=300,
             currency_id=cls.currency_usd_id,
             partner_id=cls.partner_a.id,
+            date_invoice=fields.Date.context_today(cls.env.user),
             payment_term_id=cls.payment_term.id,
             auto_validate=True,
         )
@@ -65,6 +67,7 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             invoice_amount=400,
             currency_id=cls.currency_eur_id,
             partner_id=cls.partner_china_exp.id,
+            date_invoice=fields.Date.context_today(cls.env.user),
             payment_term_id=cls.payment_term.id,
             auto_validate=True,
         )
@@ -74,6 +77,7 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             invoice_amount=500,
             currency_id=cls.currency_usd_id,
             partner_id=cls.partner_a.id,
+            date_invoice=fields.Date.context_today(cls.env.user),
             payment_term_id=cls.payment_term.id,
             auto_validate=True,
         )
@@ -83,6 +87,7 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             invoice_amount=500,
             currency_id=cls.currency_usd_id,
             partner_id=cls.partner_a.id,
+            date_invoice=fields.Date.context_today(cls.env.user),
             payment_term_id=cls.payment_term.id,
             auto_validate=True,
         )
@@ -125,6 +130,8 @@ class TestAccountBilling(AccountTestInvoicingCommon):
         action = invoices.action_create_billing()
         customer_billing1 = self.billing_model.browse(action["res_id"])
         self.assertEqual(customer_billing1.state, "draft")
+        # In case other modules change the default value of threshold_date_type
+        customer_billing1.threshold_date_type = "invoice_date_due"
         # Threshold Date error
         with self.assertRaises(ValidationError):
             customer_billing1.validate_billing()
@@ -163,7 +170,8 @@ class TestAccountBilling(AccountTestInvoicingCommon):
             bill1.validate_billing()
 
         bill1.compute_lines()
-
+        # In case _compute_billing_ids is not triggered again after compute_lines.
+        bill1.billing_line_ids.mapped("move_id")._compute_billing_ids()
         self.assertEqual(bill1.invoice_related_count, 2)
         self.assertEqual(bill1.billing_line_ids.mapped("move_id.billing_ids"), bill1)
 
@@ -199,3 +207,41 @@ class TestAccountBilling(AccountTestInvoicingCommon):
         invoices = inv_1 + inv_2
         action = invoices.action_create_billing()
         self.billing_model.browse(action["res_id"])
+
+    def test_account_billing_currency(self):
+        inv_1 = self._create_invoice(
+            move_type="in_invoice",
+            invoice_amount=100,
+            currency_id=self.currency_eur_id,
+            partner_id=self.partner_a.id,
+            payment_term_id=self.payment_term.id,
+            auto_validate=True,
+        )
+        inv_2 = inv_1.copy()
+        inv_2.invoice_date = fields.Date.today()
+        inv_2.action_post()
+        invoices = inv_1 + inv_2
+        action = invoices.action_create_billing()
+        customer_billing = self.billing_model.browse(action["res_id"])
+        self.assertEqual(customer_billing.currency_id.id, self.currency_eur_id)
+        self.assertEqual(self.env.company.currency_id.id, self.currency_usd_id)
+
+    def test_7_record_rule_company_restriction(self):
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        billing_other = self.billing_model.with_company(other_company).create(
+            {
+                "bill_type": "out_invoice",
+                "partner_id": self.partner_a.id,
+                "currency_id": self.currency_eur_id,
+                "threshold_date": datetime.now(),
+                "threshold_date_type": "invoice_date_due",
+                "company_id": other_company.id,
+            }
+        )
+        self.env.user.company_ids = [Command.set([self.env.company.id])]
+        billing = self.billing_model.search([("id", "=", billing_other.id)])
+        self.assertFalse(billing, "Billing from another company should not be visible")
+        billing_with_sudo = self.billing_model.sudo().search(
+            [("id", "=", billing_other.id)]
+        )
+        self.assertTrue(billing_with_sudo, "Sudo should bypass company record rule")
